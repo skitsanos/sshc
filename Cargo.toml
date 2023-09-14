@@ -1,6 +1,7 @@
 [package]
 name = "sshc"
 description = "SSH Client to perform file copying and command execution"
+authors = ["skitsanos, https://github.com/skitsanos"]
 
 version = "0.2.0"
 edition = "2021"

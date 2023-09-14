@@ -1,3 +1,5 @@
+use std::ffi::OsStr;
+
 pub fn ensure_port(server: &str) -> String {
     let parts: Vec<&str> = server.split(':').collect();
 
@@ -9,4 +11,9 @@ pub fn ensure_port(server: &str) -> String {
             std::process::exit(1);
         }
     }
+}
+
+pub fn normalize_string_argument<'a>(arg: &'a OsStr, arg_name: &'a str) -> Result<&'a str, String>
+{
+    arg.to_str().ok_or(format!("Failed to convert {} OsString to str", arg_name))
 }

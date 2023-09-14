@@ -2,7 +2,7 @@ use std::ffi::OsString;
 
 use structopt::StructOpt;
 
-use crate::utils::ensure_port;
+use crate::utils::{ensure_port, normalize_string_argument};
 
 mod session;
 mod utils;
@@ -77,19 +77,20 @@ fn main() {
                 std::process::exit(1);
             }
 
-            let address_str = address.to_str().ok_or("Failed to convert server OsString to str").unwrap();
+            let address_str = normalize_string_argument(&address, "address").unwrap();
             let address_with_port = ensure_port(address_str);
 
-            let username_str = username.to_str().ok_or("Failed to convert username OsString to str").unwrap();
+            //let username_str = username.to_str().ok_or("Failed to convert username OsString to str").unwrap();
+            let username_str = normalize_string_argument(&username, "username").unwrap();
 
             let password_str = if let Some(p) = &password {
-                p.to_str().map(|s| s.to_string()).ok_or("Failed to convert password OsString to str").unwrap()
+                normalize_string_argument(p, "password").unwrap().to_string()
             } else {
                 String::from("")
             };
 
             let private_key_path_str = if let Some(p) = &private_key_path {
-                p.to_str().map(|s| s.to_string()).ok_or("Failed to convert private key path OsString to str").unwrap()
+                normalize_string_argument(p, "private-key").unwrap().to_string()
             } else {
                 String::from("")
             };
@@ -111,8 +112,8 @@ fn main() {
                 println!("Connected");
             }
 
-            let source_str = source.to_str().ok_or("Failed to convert source OsString to str").unwrap();
-            let destination_str = destination.to_str().ok_or("Failed to convert destination OsString to str").unwrap();
+            let source_str = normalize_string_argument(&source, "source").unwrap();
+            let destination_str = normalize_string_argument(&destination, "destination").unwrap();
 
             println!("Copying {} to {} ...", source_str, destination_str);
 
@@ -138,21 +139,21 @@ fn main() {
             private_key_path,
             command
         } => {
-            let address_str = address.to_str().ok_or("Failed to convert server OsString to str").unwrap();
+            let address_str = normalize_string_argument(&address, "address").unwrap();
             let address_with_port = ensure_port(address_str);
 
-            let username_str = username.to_str().ok_or("Failed to convert username OsString to str").unwrap();
+            let username_str = normalize_string_argument(&username, "username").unwrap();
 
             let password_str = if let Some(p) = &password {
-                p.to_str().map(|s| s.to_string()).ok_or("Failed to convert password OsString to str").unwrap()
+                normalize_string_argument(p, "password").unwrap().to_string()
             } else {
                 String::from("")
             };
 
-            let command_str = command.to_str().ok_or("Failed to convert command OsString to str").unwrap();
+            let command_str = normalize_string_argument(&command, "command").unwrap();
 
             let private_key_path_str = if let Some(p) = &private_key_path {
-                p.to_str().map(|s| s.to_string()).ok_or("Failed to convert private key path OsString to str").unwrap()
+                normalize_string_argument(p, "private-key").unwrap().to_string()
             } else {
                 String::from("")
             };
