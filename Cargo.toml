@@ -7,5 +7,5 @@ version = "0.2.0"
 edition = "2021"
 
 [dependencies]
-ssh-rs = "0.4.2"
+ssh-rs = "0.4.3"
 structopt = "0.3.26"
