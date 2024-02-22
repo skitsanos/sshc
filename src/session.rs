@@ -1,6 +1,5 @@
 use std::net::TcpStream;
-
-use ssh_rs::{LocalSession, ssh};
+use ssh::LocalSession;
 
 pub fn session_with_key(username: &str, private_key_path: &str, server: &str) -> LocalSession<TcpStream> {
     ssh::create_session()
